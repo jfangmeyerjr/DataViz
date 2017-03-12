@@ -3,6 +3,10 @@
 
 # Key events no pude lograr :(
 
+# which python. vimos python dentro de anoconda
+# which python3. vimos mi otra version de python fuera de anaconda
+# corrimos python3 learn.matplotlib.py. Tuve que pip3 install matplotlib y numpy. holla atcha boi. OG.
+
 import numpy as np
 import matplotlib.pyplot as plt
 
