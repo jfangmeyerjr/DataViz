@@ -1,42 +1,54 @@
 from ParseRockville import Rockville 
+import math
+
+import numpy as np
+import matplotlib.pyplot as plt
 
 df = Rockville()
-print(df)
 
 # Mask for January only
 # df[(df['colname'] == value)]
 
-#calendar = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre']
-calendar = {}
+months = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre']
+calendar = []
+maxvalues = []
+minvalues = []
 
 for m in range (0,12):
-	#print(calendar[m])
-	calendar[m] = df[df['Month'] == m+1]
-	print(len(calendar[m]))
-print(type(calendar))
+	calendar.append(df[df['Month'] == m+1])
 
-#enero = df[df['Month']==1]
-#enero01 = df[df['Month'] == 01]
 # Visual check. Checks out. Somos vvvvergas.
 #enero.to_csv('January_Rockville_Weather.csv')
 
-# months = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre']
+for m in range (0,12):
+	month=calendar[m];
+	monthTMAX=month[month['Data Type']=='TMAX']
+	monthTMIN=month[month['Data Type']=='TMIN']
 
-# for m in range (0,12):
-# 	months = calendar[m]['Data Type'] == 'TMAX'
-# 	print(len('{}'.format(months[m])+'max'))
+	for d in range(1,32):
+		validatedTMIN=monthTMIN[monthTMIN["Value"+str(d)] != -9999]
+		validatedTMAX=monthTMAX[monthTMAX["Value"+str(d)] != -9999]
+		minvalues.append(validatedTMIN['Value'+str(d)].min()/10.0)
+		maxvalues.append(validatedTMAX['Value'+str(d)].max()/10.0)
 
-# eneromax = enero[enero['Data Type'] == 'TMAX']
-# # #print(len(eneromax), len(eneromax.columns))
+# print(maxvalues, len(maxvalues))
+# print(minvalues, len(minvalues))
 
-# eneromin = enero[enero['Data Type'] == 'TMIN']
-# # #print(len(eneromin), len(eneromin.columns))
+startYear=df['Year'].min()
+endYear=df['Year'].max()
 
-# print(eneromax['Value1'].max())
-for month 
-	for day
-		monthmin[monthmin['Valueday'] != -9999]['Valueday'].min()
+x = np.arange(0, 372, 1)
+y1 = maxvalues;
+y2 = minvalues;
 
+fig, ax1 = plt.subplots()
 
-		
-print(eneromin[eneromin['Value1'] != -9999]['Value1'].min())
+ax2 = ax1.twinx()
+ax1.plot(x, y1, 'g-')
+ax2.plot(x, y2, 'b-')
+
+ax1.set_xlabel('Days during year')
+ax1.set_ylabel('Max Temperature in Degrees Celsius Per Day Summary between '+str(startYear)+' and '+str(endYear)+' years', color='g')
+ax2.set_ylabel('Min Temperature in Degrees Celsius Per Day Summary between '+str(startYear)+' and '+str(endYear)+' years', color='b')
+
+plt.show()
