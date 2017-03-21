@@ -28,7 +28,8 @@ import pandas as pd
 def Rockville():
 
 	f = open('RockvilleData.txt', 'r')
-
+	# data from ftp://ftp.ncdc.noaa.gov/pub/data/ghcn/daily/all/USC00187705.dly
+	# data README https://www1.ncdc.noaa.gov/pub/data/ghcn/daily/readme.txt
 	# Hacer appends fuera de pandas y luego convertir con pandas.DataFrame
 	#df = pd.DataFrame([])
 	abunchoflines = []
