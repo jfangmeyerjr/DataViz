@@ -1,42 +1,47 @@
-from ParseRockville import Rockville 
+def DailyRecords():
+	from ParseRockville import Rockville 
 
-df = Rockville()
-print(df)
+	df = Rockville()
+	# print(df)
 
-# Mask for January only
-# df[(df['colname'] == value)]
+	# Mask 
+	# df[(df['colname'] == value)]
 
-#calendar = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre']
-calendar = {}
+	#Create a dictionary with twelve keys- the months- and each month with its data.
+	month_dbs = []
 
-for m in range (0,12):
-	#print(calendar[m])
-	calendar[m] = df[df['Month'] == m+1]
-	print(len(calendar[m]))
-print(type(calendar))
+	for m in range (0,12):
+		month_dbs.append(df[df['Month'] == m+1])
+	# 	print(len(month_dbs[m]))
+	# print(type(month_dbs))
 
-#enero = df[df['Month']==1]
-#enero01 = df[df['Month'] == 01]
-# Visual check. Checks out. Somos vvvvergas.
-#enero.to_csv('January_Rockville_Weather.csv')
+	calendar = {}
+	month_names = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre']
+	for m in range(0,12):
+		calendar[month_names[m]] = month_dbs[m]
 
-# months = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre']
+	monthmax = []
+	for m in range (0,12):
+		monthmax.append(month_dbs[m][month_dbs[m]['Data Type'] == 'TMAX'])
+		# print(len(monthmax[m]))
 
-# for m in range (0,12):
-# 	months = calendar[m]['Data Type'] == 'TMAX'
-# 	print(len('{}'.format(months[m])+'max'))
+	monthmin = []
+	for m in range (0,12):
+		monthmin.append(month_dbs[m][month_dbs[m]['Data Type'] == 'TMIN'])
 
-# eneromax = enero[enero['Data Type'] == 'TMAX']
-# # #print(len(eneromax), len(eneromax.columns))
+	dailymax = []
+	dailymin = []
+	# attempt at all months
+	for m in range (0,12):
+		last_day = [32,29,32,31,32,31,32,32,31,32,31,32]
+		for i in range (1,last_day[m]):
+			dailymax.append(monthmax[m]['Value'+str(i)][monthmax[m]['Value'+str(i)] != -9999].max()/10)
+			dailymin.append(monthmin[m]['Value'+str(i)][monthmin[m]['Value'+str(i)] != -9999].min()/10)
+	# print(len(dailymax))
+	# print(len(dailymin))
 
-# eneromin = enero[enero['Data Type'] == 'TMIN']
-# # #print(len(eneromin), len(eneromin.columns))
+	# print(dailymax)
+	# print(dailymin)
+	return dailymin, dailymax, df 
+	
 
-# print(eneromax['Value1'].max())
-for month 
-	for day
-		monthmin[monthmin['Valueday'] != -9999]['Valueday'].min()
-
-
-		
-print(eneromin[eneromin['Value1'] != -9999]['Value1'].min())
